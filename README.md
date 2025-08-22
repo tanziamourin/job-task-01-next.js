@@ -5,8 +5,8 @@ It features dark/light theme support, dynamic routing, and responsive design.
 
 ## Project Links
 
-- **GitHub Repository:** [https://github.com/username/repo-name](https://github.com/username/repo-name)  
-- **Live Site:** [https://your-site.vercel.app](https://your-site.vercel.app)
+  
+- **Live Site:** [https://job-task-01-next-js-s47r.vercel.app/](https://your-site.vercel.app)
 
 ## Project Description
 
@@ -33,3 +33,23 @@ Clone the repository:
 ```bash
 git clone https://github.com/username/repo-name.git
 cd repo-name
+
+### Install dependencies
+
+npm install
+or
+yarn install
+ or
+pnpm install
+ or
+bun install
+ 
+### Run the development server
+
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
