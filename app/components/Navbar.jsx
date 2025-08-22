@@ -2,107 +2,169 @@
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import { useState } from "react";
+import Logo from "./../components/Logo";
 import { HiMenu, HiX } from "react-icons/hi";
-import { usePathname } from "next/navigation"; // ✅ Next.js 15 path hook
+import { usePathname } from "next/navigation";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Navbar() {
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
-  const pathname = usePathname(); // ✅ এখনকার active path
+  const [dashboardOpen, setDashboardOpen] = useState(false);
+  const pathname = usePathname();
 
-  // Active + Hover link style
-  const linkClass = (href) =>
-    `relative transition-colors duration-300 ${
-      pathname === href ? "text-green-600 font-semibold" : "text-gray-700 hover:text-green-600"
-    } 
-     after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-green-600 after:transition-all after:duration-300 
-     ${pathname === href ? "after:w-full" : "after:w-0 hover:after:w-full"}`;
+  // Check active route
+  const isActive = (href) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
+
+  // Button style: active shows gradient, inactive shows outline
+  const buttonStyle = (active = false, extra = "", type = "primary") => {
+    let base = `relative px-6 py-2 font-semibold rounded-lg shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 ${extra}`;
+    
+    if (type === "primary") {
+      return active
+        ? `${base} bg-gradient-to-r from-blue-600 to-indigo-600 text-white`
+        : `${base} bg-transparent text-blue-600 dark:text-blue-400 border-2 border-gradient-to-r from-blue-500 to-indigo-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-500 hover:text-white`;
+    } else if (type === "red") {
+      return active
+        ? `${base} bg-red-700 text-white`
+        : `${base} bg-transparent text-red-700 border-2 border-red-700 hover:bg-red-700 hover:text-white`;
+    }
+  };
 
   return (
-    <nav className="bg-white shadow-md sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto flex justify-between items-center p-4">
-        {/* Logo */}
-        <Link href="/" className="text-2xl font-extrabold text-green-600">
-          ShopEase 🛒
-        </Link>
+    <nav className="bg-white dark:bg-gray-900 shadow-md sticky top-0 z-50 transition-colors duration-300">
+      <div className="max-w-7xl mx-auto flex justify-between items-center px-6 ">
+        <Logo />
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-6 font-medium">
-          <Link href="/products" className={linkClass("/products")}>
+        <div className="hidden md:flex items-center gap-4 font-medium">
+          <Link href="/" className={buttonStyle(isActive("/"))}>
+            Home
+          </Link>
+          <Link href="/products" className={buttonStyle(isActive("/products"))}>
             Products
           </Link>
+
           {session ? (
-            <>
-              <Link
-                href="/dashboard/add-product"
-                className={linkClass("/dashboard/add-product")}
-              >
-                Dashboard
-              </Link>
+            <div className="relative">
               <button
-                onClick={() => signOut()}
-                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+                onClick={() => setDashboardOpen(!dashboardOpen)}
+                className={buttonStyle(isActive("/dashboard"), "flex items-center gap-2")}
               >
-                Logout
+                Dashboard {dashboardOpen ? <HiX size={16} /> : <HiMenu size={16} />}
               </button>
-            </>
+
+              {dashboardOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-200 rounded-md shadow-lg flex flex-col gap-2 p-2">
+                  <Link
+                    href="/dashboard/add-product"
+                    className={buttonStyle(isActive("/dashboard/add-product"), "text-sm py-2")}
+                    onClick={() => setDashboardOpen(false)}
+                  >
+                    Add Product
+                  </Link>
+                  <button
+                    onClick={() => {
+                      signOut();
+                      setDashboardOpen(false);
+                    }}
+                    className={buttonStyle(false, "text-sm py-2", "red")}
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
           ) : (
-            <Link
-              href="/login"
-              className={`px-4 py-2 rounded-lg transition ${
-                pathname === "/login"
-                  ? "bg-green-700 text-white"
-                  : "bg-green-600 text-white hover:bg-green-700"
-              }`}
-            >
+            <Link href="/login" className={buttonStyle(isActive("/login"), "", "red")}>
               Login
             </Link>
           )}
+          <ThemeToggle></ThemeToggle>
         </div>
 
         {/* Mobile Menu Button */}
         <div className="md:hidden">
-          <button onClick={() => setIsOpen(!isOpen)} className="text-gray-700">
-            {isOpen ? <HiX size={26} /> : <HiMenu size={26} />}
+          <button
+            onClick={() => setIsOpen(true)}
+            className="text-gray-700 dark:text-gray-200"
+          >
+            <HiMenu size={28} />
           </button>
         </div>
       </div>
 
       {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden flex flex-col gap-3 bg-gray-50 px-4 py-3 border-t shadow-sm">
-          <Link href="/products" className={linkClass("/products")}>
+      <div
+        className={`fixed top-0 left-0 w-64 h-full bg-gray-50 dark:bg-gray-900 shadow-lg transform transition-transform duration-300 z-50 ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="flex justify-end p-4">
+          <button onClick={() => setIsOpen(false)} className="text-gray-700 dark:text-gray-200">
+            <HiX size={28} />
+          </button>
+        </div>
+
+        <div className="flex flex-col gap-4 px-6 mt-4">
+          <Link
+            href="/"
+            className={buttonStyle(isActive("/")) + " text-center"}
+            onClick={() => setIsOpen(false)}
+          >
+            Home
+          </Link>
+          <Link
+            href="/products"
+            className={buttonStyle(isActive("/products")) + " text-center"}
+            onClick={() => setIsOpen(false)}
+          >
             Products
           </Link>
+
           {session ? (
-            <>
-              <Link
-                href="/dashboard/add-product"
-                className={linkClass("/dashboard/add-product")}
-              >
-                Dashboard
-              </Link>
+            <div className="flex flex-col gap-2">
               <button
-                onClick={() => signOut()}
-                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+                onClick={() => setDashboardOpen(!dashboardOpen)}
+                className={buttonStyle(isActive("/dashboard")) + " flex justify-between items-center py-2"}
               >
-                Logout
+                Dashboard {dashboardOpen ? <HiX size={16} /> : <HiMenu size={16} />}
               </button>
-            </>
+
+              {dashboardOpen && (
+                <div className="flex flex-col gap-2 ml-4 mt-2">
+                  <Link
+                    href="/dashboard/add-product"
+                    className={buttonStyle(isActive("/dashboard/add-product"), "text-sm py-2")}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Add Product
+                  </Link>
+                  <button
+                    onClick={() => {
+                      signOut();
+                      setIsOpen(false);
+                      setDashboardOpen(false);
+                    }}
+                    className={buttonStyle(false, "text-sm py-2", "red")}
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
           ) : (
             <Link
               href="/login"
-              className={`px-4 py-2 rounded-lg transition ${
-                pathname === "/login"
-                  ? "bg-green-700 text-white"
-                  : "bg-green-600 text-white hover:bg-green-700"
-              }`}
+              className={buttonStyle(isActive("/login"), "", "red")}
+              onClick={() => setIsOpen(false)}
             >
               Login
             </Link>
           )}
+          <ThemeToggle></ThemeToggle>
         </div>
-      )}
+      </div>
     </nav>
   );
 }

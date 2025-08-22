@@ -1,21 +1,25 @@
-let products = [
-  { id: "1", name: "Laptop", description: "Good laptop", price: 1000 },
-  { id: "2", name: "Phone", description: "Smartphone", price: 500 },
-];
+import { connectDB } from "../../../lib/mongodb";
+import Product from "../../../models/Product";
 
-export async function GET(req) {
-  const url = new URL(req.url);
-  const id = url.searchParams.get("id");
-  if (id) {
-    const product = products.find((p) => p.id === id);
-    return Response.json(product);
-  }
+export async function GET() {
+  await connectDB();
+  const products = await Product.find({});
   return Response.json(products);
 }
 
 export async function POST(req) {
-  const body = await req.json();
-  const newProduct = { id: Date.now().toString(), ...body };
-  products.push(newProduct);
-  return Response.json(newProduct);
+  try {
+    await connectDB();
+    const body = await req.json();
+
+    const newProduct = await Product.create(body);
+
+    return Response.json(
+      { message: "✅ Product added successfully", product: newProduct },
+      { status: 201 }
+    );
+  } catch (error) {
+    console.error("❌ Error creating product:", error);
+    return new Response("Server Error", { status: 500 });
+  }
 }
