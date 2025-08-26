@@ -1,4 +1,5 @@
 // app/products/[id]/page.jsx
+import Link from "next/link";
 import  {connectDB}  from "../../../lib/mongodb";
 import Product from "../../../models/Product";
 import Image from "next/image";
@@ -74,10 +75,10 @@ export default async function ProductDetailsPage({ params }) {
           </div>
         )}
 
-        {/* Add to Cart */}
-        {/* <button className="px-6 py-3 text-white transition bg-blue-600 rounded-lg shadow-md hover:bg-blue-700">
-          Add to Cart
-        </button> */}
+        {/* go to home */}
+        <Link className="px-6 py-3 text-white transition bg-blue-600 rounded-lg shadow-md hover:bg-blue-700">
+          Go to home
+        </Link>
       </div>
     </div>
   );
