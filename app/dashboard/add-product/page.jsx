@@ -64,13 +64,17 @@ export default function AddProductPage() {
       setLoading(false);
     }
   };
+  useEffect(() => {
+  console.log("Session:", session, "Status:", status);
+}, [session, status]);
+
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 p-6 transition-colors duration-300">
-      <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-10 bg-white dark:bg-gray-800 shadow-2xl rounded-xl overflow-hidden">
+    <div className="flex items-center justify-center min-h-screen p-6 transition-colors duration-300 bg-gray-50 dark:bg-gray-900">
+      <div className="grid w-full max-w-6xl grid-cols-1 gap-10 overflow-hidden bg-white shadow-2xl md:grid-cols-2 dark:bg-gray-800 rounded-xl">
         {/* Left Text Section */}
-        <div className="flex flex-col justify-center px-8 py-12 bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
-          <h1 className="text-4xl font-bold mb-4">Add a New Product</h1>
+        <div className="flex flex-col justify-center px-8 py-12 text-white bg-gradient-to-r from-blue-600 to-indigo-600">
+          <h1 className="mb-4 text-4xl font-bold">Add a New Product</h1>
           <p className="text-lg opacity-90">
             Fill out the form and add your product to the platform. Make sure all
             details are correct before submitting.
@@ -87,7 +91,7 @@ export default function AddProductPage() {
               value={form.title}
               onChange={handleChange}
               required
-              className="w-full p-3 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+              className="w-full p-3 transition border rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
             <input
               type="text"
@@ -96,14 +100,14 @@ export default function AddProductPage() {
               value={form.name}
               onChange={handleChange}
               required
-              className="w-full p-3 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+              className="w-full p-3 transition border rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
             <textarea
               name="description"
               placeholder="Description"
               value={form.description}
               onChange={handleChange}
-              className="w-full p-3 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+              className="w-full p-3 transition border rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
             <input
               type="number"
@@ -112,7 +116,7 @@ export default function AddProductPage() {
               value={form.price}
               onChange={handleChange}
               required
-              className="w-full p-3 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+              className="w-full p-3 transition border rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
             <input
               type="text"
@@ -120,7 +124,7 @@ export default function AddProductPage() {
               placeholder="Image URL"
               value={form.image}
               onChange={handleChange}
-              className="w-full p-3 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+              className="w-full p-3 transition border rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
             <input
               type="text"
@@ -128,21 +132,21 @@ export default function AddProductPage() {
               placeholder="Benefits (comma separated)"
               value={form.benefits}
               onChange={handleChange}
-              className="w-full p-3 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+              className="w-full p-3 transition border rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
             <textarea
               name="suggestion"
               placeholder="Suggestion"
               value={form.suggestion}
               onChange={handleChange}
-              className="w-full p-3 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+              className="w-full p-3 transition border rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
 
             {/* Hero-style Button */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-lg shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-300"
+              className="w-full py-3 text-lg font-bold text-white transition-transform duration-300 rounded-lg shadow-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:scale-105 hover:shadow-xl"
             >
               {loading ? "Adding..." : "Add Product"}
             </button>
