@@ -1,5 +1,5 @@
 // app/products/[id]/page.jsx
-import  connectDB  from "../../../lib/mongodb";
+import  {connectDB}  from "../../../lib/mongodb";
 import Product from "../../../models/Product";
 import Image from "next/image";
 
