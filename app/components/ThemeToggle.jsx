@@ -8,6 +8,7 @@ export default function ThemeToggle() {
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") || "light";
     setTheme(savedTheme);
+
     if (savedTheme === "dark") {
       document.documentElement.classList.add("dark");
     } else {
@@ -30,7 +31,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="fixed top-6 right-6 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 shadow-lg hover:scale-110 transition-transform duration-300 z-50"
+      className="fixed z-50 p-2 text-gray-800 transition-transform duration-300 bg-gray-200 rounded-full shadow-lg top-6 right-6 dark:bg-gray-700 dark:text-gray-200 hover:scale-110"
       title="Toggle Theme"
     >
       {theme === "light" ? <BsMoon size={20} /> : <BsSun size={20} />}
