@@ -33,7 +33,7 @@ export default function AboutSection() {
           transition={{ duration: 0.8 }}
           className="w-full text-center md:w-1/2 md:text-left"
         >
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-white">
+          <h2 className="text-3xl font-bold text-gray-900 md:text-5xl dark:text-white">
             Our Story & Mission
           </h2>
 

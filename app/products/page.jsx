@@ -27,7 +27,7 @@ export default async function ProductsPage() {
         Our Products
       </h1>
 
-      <div className="grid grid-cols-2 gap-8 my-16 md:grid-cols-4">
+      <div className="grid grid-cols-1 gap-8 my-16 md:grid-cols-4">
         {products.map((p) => (
           <div
             key={p._id}

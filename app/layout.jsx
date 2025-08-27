@@ -14,11 +14,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className="text-gray-900 transition-colors duration-300 bg-gray-50 dark:bg-gray-900 dark:text-gray-100">
         <NextAuthProvider>
-         
-            <Navbar />
-            <main className="min-h-screen">{children}</main>
-            <Footer />
-       
+          <Navbar />
+          <main className="min-h-screen">{children}</main>
+          <Footer />
         </NextAuthProvider>
       </body>
     </html>
