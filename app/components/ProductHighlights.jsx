@@ -10,41 +10,60 @@ export default function ProductHighlights() {
 
   useEffect(() => {
     fetch("/api/products")
-      .then(res => res.json())
-      .then(data => setProducts(data.slice(0, 4))); // top 3 products
+      .then((res) => res.json())
+      .then((data) => setProducts(data.slice(0, 4))); // top 4 products
   }, []);
 
   return (
     <section className="p-10 mx-auto text-center transition-colors duration-300 max-w-7xl">
-      <h2 className="my-16 mb-6 text-5xl font-bold text-gray-900 dark:text-white">Highlights</h2>
-      <div className="grid grid-cols-1 gap-6 my-16 mb-6 md:grid-cols-4">
-        {products.map(p => (
+      <h2 className="my-16 mb-6 text-3xl font-bold text-gray-900 md:text-5xl dark:text-white">
+        Highlights
+      </h2>
+
+      <div className="grid grid-cols-1 gap-6 my-16 md:grid-cols-4">
+        {products.map((p) => (
           <div
             key={p._id}
-            className="p-4 transition-shadow duration-300 bg-white rounded-lg shadow-md cursor-pointer dark:bg-gray-800 hover:shadow-xl"
+            className="flex flex-col h-full overflow-hidden transition-all duration-300 shadow-md bg-gradient-to-tr from-pink-50 via-purple-50 to-indigo-50 rounded-3xl hover:shadow-2xl hover:-translate-y-2 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700"
           >
-            <div className="relative w-full h-56 mb-4">
+            {/* Product Image */}
+            <div className="relative flex-shrink-0 w-full h-56">
               <Image
                 src={p.image || "/placeholder.png"}
                 alt={p.name}
                 fill
-                className="object-cover rounded"
+                className="object-cover rounded-t-3xl"
               />
             </div>
-            <h3 className="mb-2 font-semibold text-gray-800 dark:text-gray-100">{p.name}</h3>
-            <p className="font-medium text-gray-600 dark:text-gray-300">${p.price}</p>
-             <Link
-                href={`/products/${p._id}`}
-                className="inline-block px-5 py-2 mt-4 text-white transition-colors rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-indigo-600 hover:to-blue-500 hover:-translate-y-1 "
-              >
-                View Details
-              </Link>
+
+            {/* Product Info */}
+            <div className="flex flex-col flex-grow p-4 text-center">
+              <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
+                {p.name}
+              </h3>
+              <p className="flex-grow mt-2 text-gray-600 dark:text-gray-400">
+                {p.description || "No description available."}
+              </p>
+              <p className="mt-3 text-lg font-bold text-pink-600 dark:text-pink-400">
+                ${p.price}
+              </p>
+
+              <div className="mt-auto">
+                <Link
+                  href={`/products/${p._id}`}
+                  className="inline-block px-5 py-2 mt-4 font-semibold text-white transition-all duration-300 rounded-2xl bg-gradient-to-r from-pink-400 to-purple-400 hover:from-purple-400 hover:to-pink-400 hover:-translate-y-1"
+                >
+                  View Details
+                </Link>
+              </div>
+            </div>
           </div>
         ))}
       </div>
+
       <button
         onClick={() => router.push("/products")}
-        className="px-6 py-2 mt-16 text-white transition-colors duration-300 bg-blue-600 rounded-md hover:bg-blue-700"
+        className="px-6 py-3 mt-16 font-semibold text-white transition-all duration-300 rounded-2xl bg-gradient-to-r from-pink-400 to-purple-400 hover:from-purple-400 hover:to-pink-400 hover:-translate-y-1"
       >
         View All Products
       </button>

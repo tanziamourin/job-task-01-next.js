@@ -23,13 +23,15 @@ export default async function ProductsPage() {
 
   return (
     <div className="p-6 mx-auto max-w-7xl">
-      <h1 className="my-16 mb-6 text-5xl font-bold text-center"> Products </h1>
+      <h1 className="my-16 mb-6 text-5xl font-bold text-center text-gray-900 dark:text-white">
+        Our Products
+      </h1>
 
       <div className="grid grid-cols-2 gap-8 my-16 md:grid-cols-4">
         {products.map((p) => (
           <div
             key={p._id}
-            className="flex flex-col h-full overflow-hidden transition-shadow duration-300 bg-white shadow-md dark:bg-gray-900 rounded-2xl hover:shadow-xl"
+            className="flex flex-col h-full overflow-hidden transition-all duration-300 shadow-md bg-gradient-to-tr from-pink-50 via-purple-50 to-indigo-50 rounded-3xl hover:shadow-2xl hover:-translate-y-2 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700"
           >
             {/* Product Image */}
             <div className="relative flex-shrink-0 w-full h-56">
@@ -37,7 +39,7 @@ export default async function ProductsPage() {
                 src={p.image || "/placeholder.png"}
                 alt={p.name || "Product Image"}
                 fill
-                className="object-cover"
+                className="object-cover rounded-t-3xl"
               />
             </div>
 
@@ -49,14 +51,14 @@ export default async function ProductsPage() {
               <p className="flex-grow mt-2 text-gray-600 dark:text-gray-400">
                 {p.description || "No description available."}
               </p>
-              <p className="mt-3 text-lg font-bold text-blue-600 dark:text-blue-400">
+              <p className="mt-3 text-lg font-bold text-pink-600 dark:text-pink-400">
                 ${p.price ?? "N/A"}
               </p>
 
               <div className="mt-auto">
                 <Link
                   href={`/products/${p._id}`}
-                  className="inline-block px-5 py-2 mt-4 text-white transition-colors rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-indigo-600 hover:to-blue-500 hover:-translate-y-1"
+                  className="inline-block px-5 py-2 mt-4 font-semibold text-white transition-all duration-300 rounded-2xl bg-gradient-to-r from-pink-400 to-purple-400 hover:from-purple-400 hover:to-pink-400 hover:-translate-y-1"
                 >
                   View Details
                 </Link>

@@ -7,7 +7,6 @@ export default function LoginPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-
   useEffect(() => {
     if (status === "authenticated") {
       router.push("/products");
@@ -15,34 +14,20 @@ export default function LoginPage() {
   }, [status, router]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen gap-6 ">
-      <h1 className="text-5xl font-bold text-gray-600 dark:text-white">Login</h1>
-      <p className="text-gray-600  dark:text-white">Sign in to continue</p>
+    <div className="flex flex-col items-center justify-center min-h-screen gap-8 ">
+      <h1 className="text-5xl font-extrabold text-gray-900 dark:text-white">Login</h1>
+      <p className="text-lg text-gray-700 dark:text-gray-300">Sign in to continue</p>
 
       {/* Google Login */}
       <button
         onClick={() => signIn("google", { callbackUrl: "/products" })}
-        className="px-6 py-2 text-gray-600 bg-red-500 rounded-md dark:text-white hover:bg-red-600"
+        className="px-8 py-3 font-semibold text-white transition-all duration-300 transform shadow-lg rounded-2xl bg-gradient-to-r from-red-400 to-pink-500 hover:from-pink-500 hover:to-red-400 hover:-translate-y-1 hover:scale-105"
       >
         Continue with Google
       </button>
 
-      {/* Test Credentials Login */}
-      <button
-        onClick={() =>
-          signIn("credentials", {
-            email: "test@test.com",
-            password: "1234",
-            redirect: true,
-            callbackUrl: "/products",
-          })
-        }
-        className="px-6 py-2 text-gray-600 bg-green-600 rounded-md dark:text-white hover:bg-green-700"
-      >
-        Login with Test Account
-      </button>
 
-      <p className="mt-4 text-sm text-gray-600 dark:text-white">
+      <p className="max-w-xs mt-6 text-sm text-center text-gray-600 dark:text-gray-300">
         (Use Google or the demo credentials to access protected pages)
       </p>
     </div>

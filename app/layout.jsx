@@ -1,7 +1,7 @@
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import NextAuthProvider from "./components/NextAuthProvider";
-import ThemeWrapper from "./components/ThemeWrapper"; // wrapper import
+
 import "./globals.css";
 
 export const metadata = {
@@ -14,11 +14,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className="text-gray-900 transition-colors duration-300 bg-gray-50 dark:bg-gray-900 dark:text-gray-100">
         <NextAuthProvider>
-          <ThemeWrapper>
+         
             <Navbar />
             <main className="min-h-screen">{children}</main>
             <Footer />
-          </ThemeWrapper>
+       
         </NextAuthProvider>
       </body>
     </html>

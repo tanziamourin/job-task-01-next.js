@@ -17,33 +17,41 @@ export default function Navbar() {
   const isActive = (href) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   // Button style: active shows gradient, inactive shows outline
-  const buttonStyle = (active = false, extra = "", type = "primary") => {
-    let base = `relative px-6 py-2 font-semibold rounded-lg shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 ${extra}`;
-    
-    if (type === "primary") {
-      return active
-        ? `${base} bg-gradient-to-r from-blue-600 to-indigo-600 text-white`
-        : `${base} bg-transparent text-blue-600 dark:text-blue-400 border-2 border-gradient-to-r from-blue-500 to-indigo-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-500 hover:text-white`;
-    } else if (type === "red") {
-      return active
-        ? `${base} bg-red-700 text-white`
-        : `${base} bg-transparent text-red-700 border-2 border-red-700 hover:bg-red-700 hover:text-white`;
-    }
-  };
+const buttonStyle = (active = false, extra = "", type = "primary") => {
+  let base = `relative px-6 py-2 font-semibold rounded-xl shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 ${extra}`;
+
+  if (type === "primary") {
+    return active
+      ? `${base} bg-gradient-to-r from-pink-400 to-purple-400 text-white`
+      : `${base} bg-transparent text-pink-500 dark:text-pink-300 border-2 border-pink-400 hover:bg-gradient-to-r hover:from-pink-400 hover:to-purple-400 hover:text-white`;
+  } else if (type === "secondary") {
+    return active
+      ? `${base} bg-purple-400 text-white`
+      : `${base} bg-transparent text-purple-500 border-2 border-purple-400 hover:bg-purple-400 hover:text-white`;
+  } else if (type === "green") {
+    return active
+      ? `${base} bg-green-300 text-white`
+      : `${base} bg-transparent text-green-400 border-2 border-green-300 hover:bg-green-300 hover:text-white`;
+  }
+};
 
   return (
-    <nav className="bg-white dark:bg-gray-900 shadow-md sticky top-0 z-50 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto flex justify-between items-center px-6 ">
+    <nav className="sticky top-0 z-50 transition-colors duration-300 bg-white shadow-md dark:bg-gray-900">
+      <div className="flex items-center justify-between px-6 mx-auto max-w-7xl ">
         <Logo />
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-4 font-medium">
+        <div className="items-center hidden gap-4 font-medium md:flex">
           <Link href="/" className={buttonStyle(isActive("/"))}>
             Home
+          </Link>
+            <Link href="/about" className={buttonStyle(isActive("/about"))}>
+           About Us
           </Link>
           <Link href="/products" className={buttonStyle(isActive("/products"))}>
             Products
           </Link>
+         
 
           {session ? (
             <div className="relative">
@@ -55,7 +63,7 @@ export default function Navbar() {
               </button>
 
               {dashboardOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-200 rounded-md shadow-lg flex flex-col gap-2 p-2">
+                <div className="absolute right-0 flex flex-col w-48 gap-2 p-2 mt-2 text-gray-900 rounded-md shadow-lg bg-gray-50 dark:bg-gray-800 dark:text-gray-200">
                   <Link
                     href="/dashboard/add-product"
                     className={buttonStyle(isActive("/dashboard/add-product"), "text-sm py-2")}
@@ -114,6 +122,9 @@ export default function Navbar() {
           >
             Home
           </Link>
+            <Link href="/about" className={buttonStyle(isActive("/about"))}>
+           About Us
+          </Link>
           <Link
             href="/products"
             className={buttonStyle(isActive("/products")) + " text-center"}
@@ -132,7 +143,7 @@ export default function Navbar() {
               </button>
 
               {dashboardOpen && (
-                <div className="flex flex-col gap-2 ml-4 mt-2">
+                <div className="flex flex-col gap-2 mt-2 ml-4">
                   <Link
                     href="/dashboard/add-product"
                     className={buttonStyle(isActive("/dashboard/add-product"), "text-sm py-2")}
