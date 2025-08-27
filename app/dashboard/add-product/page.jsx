@@ -66,7 +66,7 @@ export default function AddProductPage() {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
+    <div className="flex flex-col items-center min-h-screen p-6 ">
       {/* Top Text */}
       <div className="w-full max-w-3xl px-4 mb-10 text-center">
         <h1 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
